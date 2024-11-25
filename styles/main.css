@@ -1,0 +1,374 @@
+/* =========================================
+   Background and Body Styles
+   ========================================= */
+/* Applies global styles to the body of the page, including the gradient background, 
+   default font-family, text color, and layout margins/padding */
+   body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #1a1a1a, #333);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================================
+   Header Styles
+   ========================================= */
+/* Styles for the header, including background color, text alignment, and spacing */
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+/* Styles for the navigation bar inside the header, with spacing and flex alignment */
+header .navbar {
+    display: flex;
+    justify-content: space-between;
+}
+/* Link styles in the navigation bar for consistent color and padding */
+header .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+/* =========================================
+   Main Content Styles
+   ========================================= */
+/* General styles for the main content area, including padding */
+main {
+    padding: 2rem;
+}
+/* Heading styles for <h1> and <h2>, with a unique accent color */
+h1, h2 {
+    color: #61aefb;
+}
+
+/* =========================================
+   DJ Card Styles
+   ========================================= */
+/* Styles for individual DJ cards, including background, border, and shadow */
+.dj-card {
+    background-color: rgb(26, 17, 17);
+    border: 1px solid #e4effe;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.799);
+}
+/* DJ card headings styled with a unique color */
+.dj-card h2 {
+    margin-top: 0;
+    color: #7897ff;
+}
+/* Paragraphs inside DJ cards with consistent spacing */
+.dj-card p {
+    margin: 0.5rem 0;
+}
+/* Styles for action links/buttons within DJ cards */
+.dj-card a {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+.dj-card a:hover {
+    background-color: #0056b3;
+}
+
+/* =========================================
+   Feedback Styles
+   ========================================= */
+/* Success message styles for feedback notifications */
+.feedback.success {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+/* Error message styles for feedback notifications */
+.feedback.error {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* =========================================
+   Table Styles for Dashboard
+   ========================================= */
+/* General table styles for dashboard views, including width, borders, and background */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    background-color: rgb(26, 17, 17);
+    color: #fff;
+}
+/* Styles for table headers and cells, with borders and padding */
+table th, table td {
+    border: 1px solid #e4effe;
+    padding: 8px;
+    text-align: left;
+}
+/* Header cells styled with a unique background and text color */
+table th {
+    background-color: #333;
+    color: #61aefb;
+}
+/* Button styles inside table cells for actions like Accept/Reject */
+table td button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+table td button:hover {
+    background-color: #0056b3;
+}
+
+/* =========================================
+   Profile Image Styles
+   ========================================= */
+/* Styles for profile images to control size and rounded corners */
+.profile-image {
+    max-width: 150px;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+/* DJ CONNECT Employee Hub Title */
+.hub-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    color: #61aefb;
+}
+
+/* Update Profile Section */
+.update-section {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #1a1a1a;
+    border: 1px solid #e4effe;
+    border-radius: 8px;
+}
+.update-section h2 {
+    color: #7897ff;
+}
+.update-section textarea, .update-section input[type="text"] {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #e4effe;
+    background-color: #333;
+    color: white;
+}
+.update-section button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.update-section button:hover {
+    background-color: #0056b3;
+}
+
+/* Error Feedback Message on booking date */
+.feedback.error {
+    color: #ff4d4d;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* Rating and Comment Form */
+form {
+    margin-top: 1rem;
+}
+
+label {
+    display: block;
+    margin-top: 0.5rem;
+}
+
+textarea, select {
+    width: 35%;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    box-shadow: #222;
+    border: 1px solid #ccc;
+}
+
+button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Comments Section */
+.comments-section {
+    margin-top: 2rem;
+}
+
+.comment-card {
+    background-color: #222;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, .9, 0, 0.8);
+}
+
+.comment-card small {
+    display: block;
+    margin-top: 0.5rem;
+    color: #aaa;
+}
+
+#rating {
+    width: 35px; /* Adjust to your preferred width */
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #7080f6;
+    background-color: #fff;
+    color: #333;
+}
+
+#dj_connect_logo {
+    position: absolute !important;
+    top: 10px !important;
+    left: 200px !important;
+    font-size: 35px !important;
+    color: #61aefb !important;
+    text-shadow: 2px 2px 5px rgba(0, 0.9, 0, 0.8) !important;
+    font-family: 'Arial', sans-serif !important;
+    text-transform: uppercase !important;
+    z-index: 1000 !important;
+}
+ /*admin notification*/
+.feedback.success {
+    color: green;
+    font-weight: bold;
+    background-color: #e0fbe0;
+    border: 1px solid #4caf50;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #333;
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.navbar a:hover {
+    background-color: #555;
+    color: #fff;
+    border-radius: 4px;
+    transform: scale(1.1);
+}
+
+/* =========================================
+   Posts Page Styles
+========================================= */
+
+/* Container for the posts page */
+.posts-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+/* Styles for individual post cards */
+.post-card {
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Remove bottom border for the last post card */
+.post-card:last-child {
+    border-bottom: none;
+}
+
+/* Heading styles for each post */
+.post-card h2 {
+    color: #333;
+}
+
+/* Text content styles for each post */
+.post-card p {
+    color: #555;
+    margin: 0.5rem 0;
+}
+
+/* Small text (e.g., timestamps) */
+.post-card small {
+    color: #888;
+}
+
+/* Placeholder or future styles for post images */
+.post-card img {
+    width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 5px;
+}
+/* =========================================
+   General Page Styles
+   ========================================= */
+   body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #1a1a1a, #333);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    padding: 1rem;
+    text-align: center;
+}
+
+header .navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+}
+
+header .navbar a:hover {
+    color: #61aefb;
+}
+

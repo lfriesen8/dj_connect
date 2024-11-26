@@ -47,7 +47,7 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dj_profle.css">
     <title><?= htmlspecialchars($dj['username']); ?>'s Profile</title>
 </head>
 <body>
@@ -63,12 +63,18 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
     <main>
         <h1><?= htmlspecialchars($dj['username']); ?>'s Profile</h1>
 
-        <!-- DJ Bio Section -->
-        <div class="dj-info-card">
-            <p><strong>Bio:</strong> <?= htmlspecialchars_decode($dj['bio']); ?></p>
-            <p><strong>Genres:</strong> <?= htmlspecialchars_decode($dj['genres']); ?></p>
-            <p><strong>Average Rating:</strong> <?= number_format($avg_rating, 1); ?> / 5</p>
-        </div>
+        <!-- DJ Bio and Image Section -->
+<div class="dj-info-container">
+    <div class="dj-info-card">
+        <p><strong>Bio:</strong> <?= htmlspecialchars_decode($dj['bio']); ?></p>
+        <p><strong>Genres:</strong> <?= htmlspecialchars_decode($dj['genres']); ?></p>
+        <p><strong>Average Rating:</strong> <?= number_format($avg_rating, 1); ?> / 5</p>
+    </div>
+    <div class="dj-profile-image">
+        <img src="../uploads/dj_profiles/<?= htmlspecialchars($dj['profile_image']); ?>" alt="DJ Profile Picture">
+    </div>
+</div>
+
 
         <!-- Reviews Section -->
         <div class="reviews-section">
@@ -103,7 +109,7 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
             </form>
         </div>
 
-        <!-- Leave a Review Section (Moved to Bottom) -->
+        <!-- Leave a Review Section -->
         <div class="review-form">
             <h2>Leave a Review</h2>
             <form action="../backend/process_review.php" method="POST">
@@ -122,3 +128,4 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
     </main>
 </body>
 </html>
+

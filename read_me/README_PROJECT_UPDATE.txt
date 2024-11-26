@@ -1,6 +1,6 @@
 Read Me!
-*while major functions are working I'm in the process of giving the stylings of the page a rework as well as cleaning things up, 
-ive tried to organize the project by frontend and backend functions. like previously mentioned there are things I still need to clean up and fix, but overall its coming together well and im on track to being finished by the due date. 
+*while major functions are working and we are linked with Github I'm in the process of giving the stylings of the page a rework as well as cleaning things up, 
+ive tried to organize the project by frontend and backend functions. like previously mentioned there are things I still need to clean up and fix, but overall its coming together well and im on track to being finished by the due date. we are sitting at 50-60 points and should have 4 milestones covered.
 
 Project Overview
 
@@ -54,7 +54,7 @@ Login and registration pages.
 
 Profile pages for DJs with average ratings and reviews displayed.
 
-Admin dashboard with post creation and user management.
+Admin dashboard with post creation and user management. Linked with GitHub repository. 
 
 What’s Next
 
@@ -75,6 +75,8 @@ Styling updates: Some pages still need final adjustments.
 Gallery functionality: Framework added but not yet implemented.
 
 Content validation: Final checks to ensure all user inputs are secure and functional.
+
+GITHUB: https://github.com/lfriesen8/dj_connect
 
 Final Notes
 

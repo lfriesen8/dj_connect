@@ -372,3 +372,9 @@ header .navbar a:hover {
     color: #61aefb;
 }
 
+/* Error Message */
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 1em;
+}

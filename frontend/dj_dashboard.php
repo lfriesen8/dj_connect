@@ -19,7 +19,7 @@ $stmt->execute();
 $bookings = $stmt->fetchAll();
 
 // Fetch the DJ's profile information
-$query_profile = "SELECT bio, genres FROM users WHERE id = :dj_id";
+$query_profile = "SELECT bio, genres, profile_image FROM users WHERE id = :dj_id";
 $stmt_profile = $db->prepare($query_profile);
 $stmt_profile->bindValue(':dj_id', $dj_id, PDO::PARAM_INT);
 $stmt_profile->execute();
@@ -55,10 +55,9 @@ $dj_profile = $stmt_profile->fetch();
         <h1>Your Dashboard</h1>
 
         <!-- Display Feedback -->
-        <?php if (isset($_GET['message']) && $_GET['message'] === 'profile_updated'): ?>
-            <p class="feedback success">Profile updated successfully!</p>
-        <?php elseif (isset($_GET['message']) && $_GET['message'] === 'status_updated'): ?>
-            <p class="feedback success">Booking status updated successfully!</p>
+        <?php if (isset($_SESSION['message'])): ?>
+            <p class="feedback success"><?= htmlspecialchars($_SESSION['message']); ?></p>
+            <?php unset($_SESSION['message']); ?>
         <?php endif; ?>
 
         <!-- Update Bio and Genres -->
@@ -66,7 +65,6 @@ $dj_profile = $stmt_profile->fetch();
             <h2>Update Profile</h2>
             <form action="../backend/update_profile.php" method="POST">
                 <label for="bio">Bio:</label>
-                <!-- Removed htmlspecialchars for displaying raw content -->
                 <textarea name="bio" id="bio" rows="3"><?= $dj_profile['bio'] ?? ''; ?></textarea>
 
                 <label for="genres">Genres:</label>
@@ -74,6 +72,23 @@ $dj_profile = $stmt_profile->fetch();
 
                 <button type="submit">Update Profile</button>
             </form>
+        </section>
+
+        <!-- Upload Profile Image -->
+        <section class="upload-image-form">
+            <h2>Upload Profile Picture</h2>
+            <form action="../backend/upload_profile_image.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="dj_id" value="<?= $dj_id; ?>">
+                <label for="profile_image">Select an Image:</label>
+                <input type="file" id="profile_image" name="profile_image" accept="image/*" required>
+                <button type="submit">Upload</button>
+            </form>
+            <?php if (!empty($dj_profile['profile_image'])): ?>
+                <div class="current-image">
+                    <h3>Your Current Picture:</h3>
+                    <img src="../uploads/dj_profiles/<?= htmlspecialchars($dj_profile['profile_image']); ?>" alt="Profile Picture" />
+                </div>
+            <?php endif; ?>
         </section>
 
         <!-- Booking Table -->

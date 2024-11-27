@@ -1,6 +1,9 @@
 <?php
 require('connect.php');
-session_start();
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Check if the user is logged in as a DJ
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'dj') {
@@ -24,6 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $file_error = $file['error'];
     $file_size = $file['size'];
 
+    // Check for upload errors
+    if ($file_error !== UPLOAD_ERR_OK) {
+        $_SESSION['message'] = "An error occurred during file upload.";
+        header("Location: ../frontend/dj_dashboard.php");
+        exit;
+    }
+
     // Allowed extensions
     $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
     $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
@@ -45,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Move the file to the uploads directory
     $upload_dir = "../uploads/dj_profiles/";
     if (!is_dir($upload_dir)) {
-        mkdir($upload_dir, 0777, true);
+        mkdir($upload_dir, 0755, true);
     }
 
     $new_file_name = "dj_" . $dj_id . "_profile." . $file_ext;
@@ -92,6 +102,8 @@ function resizeImage($source, $destination, $width, $height) {
         $image = imagecreatefromjpeg($source);
     } elseif ($image_type == IMAGETYPE_PNG) {
         $image = imagecreatefrompng($source);
+        imagealphablending($image, false);
+        imagesavealpha($image, true);
     } elseif ($image_type == IMAGETYPE_GIF) {
         $image = imagecreatefromgif($source);
     } else {
@@ -99,6 +111,11 @@ function resizeImage($source, $destination, $width, $height) {
     }
 
     $new_image = imagecreatetruecolor($width, $height);
+    if ($image_type == IMAGETYPE_PNG) {
+        imagealphablending($new_image, false);
+        imagesavealpha($new_image, true);
+    }
+
     imagecopyresampled($new_image, $image, 0, 0, 0, 0, $width, $height, imagesx($image), imagesy($image));
 
     if ($image_type == IMAGETYPE_JPEG) {

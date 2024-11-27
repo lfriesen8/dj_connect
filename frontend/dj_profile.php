@@ -71,7 +71,7 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
         <p><strong>Average Rating:</strong> <?= number_format($avg_rating, 1); ?> / 5</p>
     </div>
     <div class="dj-profile-image">
-        <img src="../uploads/dj_profiles/<?= htmlspecialchars($dj['profile_image']); ?>" alt="DJ Profile Picture">
+        <img src="../uploads/dj_profiles/<?= htmlspecialchars($dj['profile_image']); ?>" alt="">
     </div>
 </div>
 

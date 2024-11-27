@@ -1,7 +1,6 @@
 <?php
 require('../backend/connect.php');
 
-
 // Ensure the user is an admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
@@ -47,15 +46,17 @@ $posts = $stmt_posts->fetchAll();
         <div class="navbar">
             <span>Admin Dashboard</span>
             <a href="../frontend/index.php">Home</a>
+            <a href="../frontend/manage_users.php">Manage Site Users</a>
             <a href="../backend/logout.php">Logout</a>
         </div>
     </header>
     <main>
-        <?php if (isset($_SESSION['success_message'])): ?>
-            <p class="feedback success"><?= htmlspecialchars($_SESSION['success_message']); ?></p>
-            <?php unset($_SESSION['success_message']); ?>
-        <?php endif; ?>
         <h1>Welcome, <?= htmlspecialchars($_SESSION['username']); ?>!</h1>
+
+        <!-- Manage Site Users -->
+        <section>
+            <a href="manage_users.php" class="button">Manage Site Users</a>
+        </section>
 
         <!-- To-Do List Section -->
         <section class="todo-section">
@@ -111,61 +112,7 @@ $posts = $stmt_posts->fetchAll();
                 <p>No announcements yet.</p>
             <?php endif; ?>
         </section>
-
-        <!-- Incoming Bookings -->
-        <section class="bookings-section">
-            <h2>Incoming Bookings</h2>
-            <?php if (!empty($bookings)): ?>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Client</th>
-                            <th>DJ</th>
-                            <th>Event Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($bookings as $booking): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($booking['id']); ?></td>
-                                <td><?= htmlspecialchars($booking['client_name']); ?></td>
-                                <td><?= htmlspecialchars($booking['dj_name']); ?></td>
-                                <td><?= htmlspecialchars($booking['event_date']); ?></td>
-                                <td><?= htmlspecialchars($booking['status']); ?></td>
-                                <td>
-                                    <form action="../backend/delete_bookings.php" method="POST" style="display:inline;">
-                                        <input type="hidden" name="booking_id" value="<?= $booking['id']; ?>">
-                                        <button type="submit">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <p>No bookings found.</p>
-            <?php endif; ?>
-        </section>
-
-        <!-- DJ Profiles -->
-        <section class="dj-profiles-section">
-            <h2>DJ Profiles</h2>
-            <?php if (!empty($djs)): ?>
-                <?php foreach ($djs as $dj): ?>
-                    <div class="dj-card">
-                        <h3><?= htmlspecialchars($dj['username']); ?></h3>
-                        <p><strong>Bio:</strong> <?= htmlspecialchars($dj['bio']); ?></p>
-                        <p><strong>Genres:</strong> <?= htmlspecialchars($dj['genres']); ?></p>
-                        <a href="../frontend/dj_profile.php?id=<?= $dj['id']; ?>">View Profile</a>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>No DJs found.</p>
-            <?php endif; ?>
-        </section>
     </main>
 </body>
 </html>
+

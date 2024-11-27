@@ -1,5 +1,5 @@
 <?php
-//Handles option from DJ
+// Handles option from DJ
 require('connect.php');
 session_start();
 
@@ -24,13 +24,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindValue(':dj_id', $_SESSION['user_id'], PDO::PARAM_INT);
 
         if ($stmt->execute()) {
-            header("Location: ../frontend/dj_dashboard.php?message=booking_status_updated");
+            // Set a session message
+            $_SESSION['message'] = "Booking successfully " . ucfirst($new_status) . ".";
+            header("Location: ../frontend/dj_dashboard.php");
             exit;
         } else {
-            die("Failed to update booking status.");
+            $_SESSION['message'] = "Failed to update booking status.";
+            header("Location: ../frontend/dj_dashboard.php");
+            exit;
         }
     } else {
-        die("Invalid booking request.");
+        $_SESSION['message'] = "Invalid booking request.";
+        header("Location: ../frontend/dj_dashboard.php");
+        exit;
     }
 }
 ?>
+

@@ -1,6 +1,7 @@
 <?php
-//mainpage
+// mainpage
 require('../backend/connect.php');
+
 // Ensure session is started only if not already active
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -53,8 +54,9 @@ $djs = $stmt->fetchAll();
             <?php foreach ($djs as $dj): ?>
                 <div class="dj-card">
                     <h2><?= htmlspecialchars($dj['username']); ?></h2>
-                    <p><strong>Bio:</strong> <?= htmlspecialchars($dj['bio']); ?></p>
-                    <p><strong>Genres:</strong> <?= htmlspecialchars($dj['genres']); ?></p>
+                    <!-- Use htmlspecialchars_decode to render saved HTML for bio and genres -->
+                    <p><strong>Bio:</strong> <?= htmlspecialchars_decode($dj['bio']); ?></p>
+                    <p><strong>Genres:</strong> <?= htmlspecialchars_decode($dj['genres']); ?></p>
                     <a href="dj_profile.php?id=<?= $dj['id']; ?>">View Profile & Book</a>
                 </div>
             <?php endforeach; ?>
@@ -64,3 +66,4 @@ $djs = $stmt->fetchAll();
     </main>
 </body>
 </html>
+

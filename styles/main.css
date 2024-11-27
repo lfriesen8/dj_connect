@@ -378,3 +378,29 @@ header .navbar a:hover {
     font-size: 0.9em;
     margin-bottom: 1em;
 }
+
+/* filtering button (posts) */
+.sorting-options {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sort-button {
+    padding: 0.5rem 1rem;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.sort-button:hover {
+    background-color: #555;
+}
+
+.sort-button.active {
+    background-color: #61aefb;
+    font-weight: bold;
+}

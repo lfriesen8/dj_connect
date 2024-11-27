@@ -12,10 +12,14 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-// Fetch all posts along with their authors
+// Determine sorting order (default: newest first)
+$order = filter_input(INPUT_GET, 'order', FILTER_SANITIZE_STRING) === 'asc' ? 'asc' : 'desc';
+
+// Fetch posts with the selected order
 $query = "SELECT p.id, p.title, p.content, p.created_at, u.username AS author 
           FROM posts p
-          JOIN users u ON u.id = p.author_id";
+          JOIN users u ON u.id = p.author_id
+          ORDER BY p.created_at $order";
 $stmt = $db->prepare($query);
 $stmt->execute();
 $posts = $stmt->fetchAll();
@@ -27,15 +31,6 @@ $posts = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/main.css">
-    <script src="https://cdn.tiny.cloud/1/z32poujg8jny9f8k2hhapiykufgwq3c04yeoptqsp38a8dwb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: '#new_post_content',
-            plugins: 'link image lists',
-            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright | bullist numlist | link image',
-            branding: false
-        });
-    </script>
     <title>Posts</title>
 </head>
 <body>
@@ -50,6 +45,13 @@ $posts = $stmt->fetchAll();
     </header>
     <main class="posts-container">
         <h1>Latest Posts</h1>
+
+        <!-- Sorting Options -->
+        <div class="sorting-options">
+            <p>Sort by:</p>
+            <a href="?order=desc" class="sort-button <?= $order === 'desc' ? 'active' : '' ?>">Newest to Oldest</a>
+            <a href="?order=asc" class="sort-button <?= $order === 'asc' ? 'active' : '' ?>">Oldest to Newest</a>
+        </div>
 
         <!-- Admin-Only Section for Creating Posts -->
         <?php if ($_SESSION['role'] === 'admin'): ?>
@@ -73,7 +75,7 @@ $posts = $stmt->fetchAll();
                 <div class="post-card">
                     <h2><?= htmlspecialchars($post['title']); ?></h2>
                     <p><strong>By:</strong> <?= htmlspecialchars($post['author']); ?></p>
-                    <p><?= nl2br(htmlspecialchars($post['content'])); ?></p>
+                    <div><?= htmlspecialchars_decode($post['content']); ?></div>
                     <small>Posted on <?= htmlspecialchars($post['created_at']); ?></small>
                 </div>
             <?php endforeach; ?>
@@ -83,3 +85,4 @@ $posts = $stmt->fetchAll();
     </main>
 </body>
 </html>
+

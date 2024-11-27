@@ -74,21 +74,25 @@ $dj_profile = $stmt_profile->fetch();
             </form>
         </section>
 
-        <!-- Upload Profile Image -->
+        <!-- Upload and Remove Profile Image -->
         <section class="upload-image-form">
-            <h2>Upload Profile Picture</h2>
+            <h2>Profile Picture</h2>
+            <?php if (!empty($dj_profile['profile_image'])): ?>
+                <div class="current-image">
+                    <img src="../uploads/dj_profiles/<?= htmlspecialchars($dj_profile['']); ?>" alt="Profile Picture" />
+                </div>
+                <form action="../backend/remove_profile_image.php" method="POST">
+                    <button type="submit">Remove Profile Picture</button>
+                </form>
+            <?php else: ?>
+                <p>No profile picture uploaded.</p>
+            <?php endif; ?>
             <form action="../backend/upload_profile_image.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="dj_id" value="<?= $dj_id; ?>">
-                <label for="profile_image">Select an Image:</label>
+                <label for="profile_image">Upload a New Profile Picture:</label>
                 <input type="file" id="profile_image" name="profile_image" accept="image/*" required>
                 <button type="submit">Upload</button>
             </form>
-            <?php if (!empty($dj_profile['profile_image'])): ?>
-                <div class="current-image">
-                    <h3>Your Current Picture:</h3>
-                    <img src="../uploads/dj_profiles/<?= htmlspecialchars($dj_profile['profile_image']); ?>" alt="Profile Picture" />
-                </div>
-            <?php endif; ?>
         </section>
 
         <!-- Booking Table -->

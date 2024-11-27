@@ -75,25 +75,30 @@ $dj_profile = $stmt_profile->fetch();
         </section>
 
         <!-- Upload and Remove Profile Image -->
-        <section class="upload-image-form">
-            <h2>Profile Picture</h2>
-            <?php if (!empty($dj_profile['profile_image'])): ?>
-                <div class="current-image">
-                    <img src="../uploads/dj_profiles/<?= htmlspecialchars($dj_profile['']); ?>" alt="Profile Picture" />
-                </div>
-                <form action="../backend/remove_profile_image.php" method="POST">
-                    <button type="submit">Remove Profile Picture</button>
-                </form>
-            <?php else: ?>
-                <p>No profile picture uploaded.</p>
-            <?php endif; ?>
-            <form action="../backend/upload_profile_image.php" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="dj_id" value="<?= $dj_id; ?>">
-                <label for="profile_image">Upload a New Profile Picture:</label>
-                <input type="file" id="profile_image" name="profile_image" accept="image/*" required>
-                <button type="submit">Upload</button>
-            </form>
-        </section>
+<section class="upload-image-form">
+    <h2>Profile Picture</h2>
+    <?php 
+    // Construct the full path to the image file
+    $image_path = "../uploads/dj_profiles/" . htmlspecialchars($dj_profile['profile_image']); 
+    ?>
+    <?php if (!empty($dj_profile['profile_image']) && file_exists($image_path)): ?>
+        <div class="current-image">
+            <img src="<?= $image_path; ?>" alt="Profile Picture" />
+        </div>
+        <form action="../backend/remove_profile_image.php" method="POST">
+            <button type="submit">Remove Profile Picture</button>
+        </form>
+    <?php else: ?>
+        <p>No profile picture uploaded.</p>
+    <?php endif; ?>
+    <form action="../backend/upload_profile_image.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="dj_id" value="<?= $dj_id; ?>">
+        <label for="profile_image">Upload a New Profile Picture:</label>
+        <input type="file" id="profile_image" name="profile_image" accept="image/*" required>
+        <button type="submit">Upload</button>
+    </form>
+</section>
+
 
         <!-- Booking Table -->
         <h2>Your Bookings</h2>

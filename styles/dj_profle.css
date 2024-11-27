@@ -214,3 +214,33 @@
 .review-form button:hover {
     background-color: #0056b3;
 }
+
+/* Gradient Border for DJ Image */
+.dj-image img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    padding: 5px; /* Space for gradient border */
+    background: linear-gradient(90deg, #61aefb, #007bff, #61aefb);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Pricing Section */
+.pricing {
+    margin-top: 1rem;
+    background-color: #1a1a1a;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid #e4effe;
+}
+
+.pricing h3 {
+    margin-bottom: 0.5rem;
+    color: #61aefb;
+}
+
+.pricing p {
+    margin: 0.3rem 0;
+    color: #fff;
+}

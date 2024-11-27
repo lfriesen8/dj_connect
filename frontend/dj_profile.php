@@ -64,17 +64,26 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
         <h1><?= htmlspecialchars($dj['username']); ?>'s Profile</h1>
 
         <!-- DJ Bio and Image Section -->
+         <div class="About">
+            <h3> About: </h3>
+         </div>
+         <div class="dj-profile-image">
+        <img src="../uploads/dj_profiles/<?= htmlspecialchars($dj['profile_image']); ?>" alt="">
+    </div>
 <div class="dj-info-container">
     <div class="dj-info-card">
         <p><strong>Bio:</strong> <?= htmlspecialchars_decode($dj['bio']); ?></p>
         <p><strong>Genres:</strong> <?= htmlspecialchars_decode($dj['genres']); ?></p>
         <p><strong>Average Rating:</strong> <?= number_format($avg_rating, 1); ?> / 5</p>
-    </div>
-    <div class="dj-profile-image">
-        <img src="../uploads/dj_profiles/<?= htmlspecialchars($dj['profile_image']); ?>" alt="">
+        <br>
+        <div class="pricing">
+                        <h3>Pricing:</h3>
+                        <p>Social: $625.00</p>
+                        <p>Wedding: $1000.00</p>
+                        <p>Booking Bundle Deal: Save $225.00 when you book a Social and Wedding together!</p>
+                    </div>
     </div>
 </div>
-
 
         <!-- Reviews Section -->
         <div class="reviews-section">
@@ -97,7 +106,7 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
 
         <!-- Booking Section -->
         <div class="booking-form">
-            <h2>Book <?= htmlspecialchars($dj['username']); ?></h2>
+            <h2>Request <?= htmlspecialchars($dj['username']); ?></h2>
             <form action="../backend/process_booking.php" method="POST">
                 <input type="hidden" name="client_id" value="<?= $_SESSION['user_id']; ?>">
                 <input type="hidden" name="dj_id" value="<?= $dj_id; ?>">
@@ -105,7 +114,7 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
                 <label for="event_date">Event Date:</label>
                 <input type="date" id="event_date" name="event_date" required>
 
-                <button type="submit">Request Booking</button>
+                <button type="submit">Request Consultation</button>
             </form>
         </div>
 

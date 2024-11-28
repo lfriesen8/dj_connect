@@ -33,6 +33,15 @@ header .navbar a {
     padding: 0.5rem 1rem;
 }
 
+#welcome-message {
+    font-size: 18px; /* Adjust font size as needed */
+    color: #4fa4ff; /* Text color */
+    text-shadow: 2px 4px 10px rgba(0, 0, 1, 0.712); /* Drop shadow */
+    font-family: 'Arial', sans-serif; /* Ensure consistent font */
+
+}
+
+
 /* =========================================
    Main Content Styles
    ========================================= */
@@ -248,17 +257,35 @@ button:hover {
     background-color: #fff;
     color: #333;
 }
-
+ /* fun logo design */
 #dj_connect_logo {
     position: absolute !important;
     top: 10px !important;
-    left: 200px !important;
+    left: 650px !important;
     font-size: 35px !important;
     color: #61aefb !important;
-    text-shadow: 2px 2px 5px rgba(0, 0.9, 0, 0.8) !important;
+    text-shadow: 2px 2px 5px rgba(0, 0.9, 0.2, 0.8) !important;
     font-family: 'Arial', sans-serif !important;
     text-transform: uppercase !important;
     z-index: 1000 !important;
+}
+
+#dj_connect_logo a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the parent color from #dj_connect_logo */
+}
+
+#dj_connect_logo a:hover {
+    animation: blink 0.8s infinite;
+    cursor: pointer;
+}
+
+/* Blinking animation for hover */
+@keyframes blink {
+    50% {
+        color: #b5edff; /* Change to any hover color */
+    }
+
 }
  /*admin notification*/
 .feedback.success {

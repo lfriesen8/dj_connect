@@ -34,6 +34,9 @@ $posts = $stmt->fetchAll();
     <title>Posts</title>
 </head>
 <body>
+<div id="dj_connect_logo">
+    <a href="index.php">DJ CONNECT</a>
+</div>
     <header>
         <div class="navbar">
             <a href="index.php">Home</a>

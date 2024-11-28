@@ -29,17 +29,19 @@ $djs = $stmt->fetchAll();
     <title>Welcome to DJ Connect</title>
 </head>
 <body>
-    <div id="dj_connect_logo">DJ CONNECT</div>
+    <div id="dj_connect_logo">
+    <a href="index.php">DJ CONNECT</a>
+    </div>
     <header>
         <div class="navbar">
-            <span>Welcome, <?= htmlspecialchars($_SESSION['username']); ?>!</span>
             <a href="posts.php">Posts</a> <!-- Added link to Posts page -->
             <?php if ($_SESSION['role'] === 'admin'): ?>
                 <a href="admin_dashboard.php">Admin Dashboard</a>
             <?php endif; ?>
             <a href="../backend/logout.php">Logout</a> <!-- Fixed logout link -->
         </div>
-    </header>
+        <span id="welcome-message">Welcome, <?= htmlspecialchars($_SESSION['username']); ?>!</span>
+      </header>
     <main>
         <p>
             At DJ Connect, we make it simple for you to browse talented DJs, check out their average ratings and reviews, 

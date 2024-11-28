@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+/* styles for the dj profile page */ 
 
 /* =========================================
    General Page Styles
@@ -46,6 +48,28 @@
     color: #fff;
 }
 
+.handwriting-text {
+    font-family: 'Pacifico', cursive; /* Use the fancy handwriting font */
+    font-size: 36px; /* Adjust size to make it pop */
+    color: #61aefb; /* Match with your brand's color scheme */
+    text-shadow: 5px 2px 5px rgba(0, 0, 0, 0.688); /* Add some shadow for a 3D effect */
+    letter-spacing: 1px; /* Slight spacing for elegance */
+    text-align: center; /* Center the text */
+    margin-top: 20px; /* Adjust spacing */
+    animation: fancy-glow 2s infinite alternate; /*glowing effect */
+}
+
+/*Animation */
+@keyframes fancy-glow {
+    from {
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5), 0 0 10px #61aefb;
+    }
+    to {
+        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7), 0 0 20px #007bff;
+    }
+}
+
+
 /* =========================================
    DJ Info Section
    ========================================= */
@@ -73,20 +97,17 @@
 .dj-info-card strong {
     color: #61aefb;
 }
-/* Profile picture styles */
-.dj-image {
-    flex: 1; /* Takes up 1/3 of the space */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.dj-profile-image img {
+    max-width: 100%;
+    max-height: 250px;
+    border-radius: 12px; /* Smooth corners */
+    padding: 4px; /* Space for gradient */
+    background-clip: border-box;
+    background: linear-gradient(90deg, #61aefb, #007bff, #61aefb); /* Gradient border */
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    object-fit: cover; /* Ensures proper scaling */
 }
 
-.dj-image img {
-    max-width: 100%;
-    max-height: 250px; /* Restrict height for alignment */
-    border-radius: 8px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0.6, 0.3);
-}
 
 
 
@@ -213,16 +234,6 @@
 }
 .review-form button:hover {
     background-color: #0056b3;
-}
-
-/* Gradient Border for DJ Image */
-.dj-image img {
-    max-width: 100%;
-    max-height: 300px;
-    border-radius: 8px;
-    padding: 5px; /* Space for gradient border */
-    background: linear-gradient(90deg, #61aefb, #007bff, #61aefb);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Pricing Section */

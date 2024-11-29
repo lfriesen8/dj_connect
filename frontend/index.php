@@ -1,4 +1,5 @@
 <?php
+// ma<?php
 // mainpage
 require('../backend/connect.php');
 
@@ -13,8 +14,11 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-// Fetch all DJs
-$query = "SELECT id, username, bio, genres FROM users WHERE role = 'dj'";
+// Fetch all DJs along with their average ratings
+$query = "SELECT u.id, u.username, u.bio, u.genres, 
+                 (SELECT AVG(rating) FROM ratings_reviews WHERE dj_id = u.id) AS avg_rating
+          FROM users u
+          WHERE u.role = 'dj'";
 $stmt = $db->prepare($query);
 $stmt->execute();
 $djs = $stmt->fetchAll();
@@ -30,22 +34,23 @@ $djs = $stmt->fetchAll();
 </head>
 <body>
     <div id="dj_connect_logo">
-    <a href="index.php">DJ CONNECT</a>
+        <a href="index.php">DJ CONNECT</a>
     </div>
     <header>
         <div class="navbar">
-            <a href="posts.php">Posts</a> <!-- Added link to Posts page -->
+            <a href="posts.php">Posts</a>
             <?php if ($_SESSION['role'] === 'admin'): ?>
                 <a href="admin_dashboard.php">Admin Dashboard</a>
             <?php endif; ?>
-            <a href="../backend/logout.php">Logout</a> <!-- Fixed logout link -->
+            <a href="../backend/logout.php">Logout</a>
         </div>
         <span id="welcome-message">Welcome, <?= htmlspecialchars($_SESSION['username']); ?>!</span>
-      </header>
+    </header>
     <main>
-        <p>
+        <p class="intro-paragraph">
             At DJ Connect, we make it simple for you to browse talented DJs, check out their average ratings and reviews, 
-            and easily book your favorite for your next event. Keeping it simple and painless is what we do best!
+            checkout updates from our admins, and easily book your favorite for your next event. <br><br>
+            Keeping it simple, painless, and affordable... is what we do best!
         </p>
         <!-- Display Feedback Message -->
         <?php if (isset($_GET['message']) && $_GET['message'] === 'booking_success'): ?>
@@ -56,9 +61,9 @@ $djs = $stmt->fetchAll();
             <?php foreach ($djs as $dj): ?>
                 <div class="dj-card">
                     <h2><?= htmlspecialchars($dj['username']); ?></h2>
-                    <!-- Use htmlspecialchars_decode to render saved HTML for bio and genres -->
                     <p><strong>Bio:</strong> <?= htmlspecialchars_decode($dj['bio']); ?></p>
                     <p><strong>Genres:</strong> <?= htmlspecialchars_decode($dj['genres']); ?></p>
+                    <p><strong>Average Rating:</strong> <?= number_format($dj['avg_rating'] ?? 0, 1); ?> / 5</p>
                     <a href="dj_profile.php?id=<?= $dj['id']; ?>">View Profile & Book</a>
                 </div>
             <?php endforeach; ?>
@@ -68,4 +73,5 @@ $djs = $stmt->fetchAll();
     </main>
 </body>
 </html>
+
 

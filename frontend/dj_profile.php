@@ -57,6 +57,7 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
             <?php if ($_SESSION['role'] === 'admin'): ?>
                 <a href="admin_dashboard.php">Admin Dashboard</a>
             <?php endif; ?>
+            <span id="meet-your-dj">MEET YOUR DJ!</span>
             <a href="../backend/logout.php">Logout</a>
         </div>
     </header>

@@ -36,6 +36,35 @@
     transform: scale(1.1);
 }
 
+#meet-your-dj {
+    font-family: 'Arial', sans-serif; /* Match font styling with the rest of the page */
+    font-size: 23px; /* Make it prominent but not overwhelming */
+    color: #61aefb; /* Blue color that matches the theme */
+    text-shadow: 2px 2px 5px rgba(0, 0.9, 0.2, 0.8); /* Soft glow effect */
+    animation: pulse 2s infinite; /* Slight pulsing effect */
+    margin: 0 auto; /* Center it within the navbar */
+    text-transform: uppercase; /* All caps for consistency */
+    font-weight: bold; /* Make it stand out */
+    display: block; /* Ensure it behaves consistently in the layout */
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0% {
+        color: #61aefb;
+        text-shadow: 0 0 10px rgba(97, 174, 251, 0.8), 0 0 20px rgba(97, 174, 251, 0.6);
+    }
+    50% {
+        color: #007bff; /* Slightly darker blue */
+        text-shadow: 0 0 15px rgba(0, 123, 255, 0.7), 0 0 25px rgba(0, 123, 255, 0.5);
+    }
+    100% {
+        color: #61aefb;
+        text-shadow: 0 0 10px rgba(97, 174, 251, 0.8), 0 0 20px rgba(97, 174, 251, 0.6);
+    }
+}
+
+
 /* =========================================
    DJ Profile Page Layout
    ========================================= */
@@ -83,13 +112,16 @@
 
 /* Bio box styles */
 .dj-info-card {
-    flex: 1; /* Takes up 2/3 of the space */
-    background-color: #222;
+    max-width: 800px; /* Adjusted to bring it in */
+    margin: 0 auto; /* Center the card */
+    background-color: #222; /* Keep your styling */
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     border: 1px solid #e4effe;
+    color: #fff;
 }
+
 .dj-info-card p {
     margin: 0.5rem 0;
     font-size: 1rem;

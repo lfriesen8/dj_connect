@@ -42,6 +42,7 @@ $djs = $stmt->fetchAll();
             <?php if ($_SESSION['role'] === 'admin'): ?>
                 <a href="admin_dashboard.php">Admin Dashboard</a>
             <?php endif; ?>
+            <a href="gallery.php">Past Events</a>
             <a href="../backend/logout.php">Logout</a>
         </div>
         <span id="welcome-message">Welcome, <?= htmlspecialchars($_SESSION['username']); ?>!</span>

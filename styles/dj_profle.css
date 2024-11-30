@@ -177,7 +177,7 @@
 /* =========================================
    Booking Form
    ========================================= */
-.booking-form {
+   .booking-form {
     padding: 1.5rem;
     background-color: #1a1a1a;
     border-radius: 8px;
@@ -287,3 +287,5 @@
     margin: 0.3rem 0;
     color: #fff;
 }
+
+

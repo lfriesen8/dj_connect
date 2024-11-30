@@ -15,13 +15,13 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitize inputs
-    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
+    // Sanitize and validate inputs
+    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
     $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $author_id = $_SESSION['user_id']; // Use the logged-in admin's ID
 
     // Validate required inputs
-    if ($title && $content) {
+    if (!empty($title) && !empty($content)) {
         // Insert post into the database
         $query = "INSERT INTO posts (title, content, author_id, created_at, updated_at) 
                   VALUES (:title, :content, :author_id, NOW(), NOW())";
@@ -31,18 +31,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindValue(':author_id', $author_id, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
-            // Redirect back to the admin dashboard with a success message
-            $author = $_SESSION['username']; // Pass the admin username for confirmation
-            header("Location: ../frontend/admin_dashboard.php?message=post_created&author=$author");
-            exit;
+            // Set a success message in session
+            $_SESSION['message'] = "Post created successfully!";
+            $_SESSION['message_type'] = "success";
         } else {
-            die("Failed to create post.");
+            $_SESSION['message'] = "Failed to create post.";
+            $_SESSION['message_type'] = "error";
         }
     } else {
-        // Redirect with an error message if validation fails
-        header("Location: ../frontend/admin_dashboard.php?error=Invalid input.");
-        exit;
+        $_SESSION['message'] = "Title and content are required.";
+        $_SESSION['message_type'] = "error";
     }
+
+    // Redirect back to the admin dashboard
+    header("Location: ../frontend/admin_dashboard.php");
+    exit;
 } else {
     // Redirect if accessed without a POST request
     header("Location: ../frontend/admin_dashboard.php");

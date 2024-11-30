@@ -1,15 +1,9 @@
 <?php
-/**
- * Manage Users Page
- * Allows admin users to view, update, and delete users in the system.
- */
-
 require('../backend/connect.php');
-
 
 // Ensure the user is an admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../frontend/login.php");
+    header("Location: login.php");
     exit;
 }
 
@@ -38,13 +32,17 @@ $users = $stmt_users->fetchAll();
     <main>
         <h1>Manage Users</h1>
 
-        <!-- Display Feedback Messages -->
-        <?php if (isset($_SESSION['message'])): ?>
-            <p class="<?= $_SESSION['message_type'] === 'success' ? 'feedback success' : 'feedback error'; ?>">
-                <?= htmlspecialchars($_SESSION['message']); ?>
-            </p>
-            <?php unset($_SESSION['message'], $_SESSION['message_type']); ?>
-        <?php endif; ?>
+       <!-- Display Feedback Messages -->
+<?php if (isset($_SESSION['message'])): ?>
+    <p class="<?= isset($_SESSION['message_type']) ? 'feedback ' . htmlspecialchars($_SESSION['message_type']) : 'feedback'; ?>">
+        <?= htmlspecialchars($_SESSION['message']); ?>
+    </p>
+    <?php 
+        // Clear the message after it's displayed
+        unset($_SESSION['message'], $_SESSION['message_type']); 
+    ?>
+<?php endif; ?>
+
 
         <!-- Add User Form -->
         <section>

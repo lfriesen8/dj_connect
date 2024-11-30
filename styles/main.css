@@ -10,6 +10,11 @@
     margin: 0;
     padding: 0;
 }
+/* Specific styling for the index page */
+#index-page {
+    background: url('../images/Indexbackground.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white; /* Ensures text is readable on the image */ }
 
 /* =========================================
    Header Styles
@@ -46,7 +51,7 @@ header .navbar a {
     max-width: 600px; /* Restrict the width */
     margin: 50px auto; /* Center the paragraph */
     padding: 20px;
-    background-color: rgba(97, 174, 251, 0.1); /* Subtle background */
+    background-color: rgba(97, 174, 251, 0.8); /* Increased opacity for better visibility */
     border-radius: 10px;
     text-align: center;
     font-size: 18px; /* Comfortable reading size */
@@ -54,8 +59,9 @@ header .navbar a {
     opacity: 0; /* Initial state for fade-in */
     animation: fadeIn 2s forwards; /* Apply fade-in animation */
     color: #ffffff;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); /* Enhanced shadow for a more prominent look */
 }
+
 
 /* Fade-in Animation */
 @keyframes fadeIn {
@@ -82,27 +88,46 @@ h1, h2 {
     color: #61aefb;
 }
 
-/* =========================================
+/* ========================================= 
    DJ Card Styles
    ========================================= */
-/* Styles for individual DJ cards, including background, border, and shadow */
+
+/* Container for DJ cards styled as a grid */
+.dj-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid with 3 per row */
+    gap: 20px; /* Space between cards */
+    padding: 20px; /* Space around the grid */
+}
+
+/* Individual DJ cards with hover effect */
 .dj-card {
     background-color: rgb(26, 17, 17);
     border: 1px solid #e4effe;
     border-radius: 8px;
     padding: 1rem;
-    margin-bottom: 1rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.799);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.dj-card:hover {
+    transform: translateY(-10px); /* Lift the card on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.9);
+}
+
 /* DJ card headings styled with a unique color */
 .dj-card h2 {
     margin-top: 0;
     color: #7897ff;
+    font-size: 1.5rem; /* Adjust heading size */
 }
+
 /* Paragraphs inside DJ cards with consistent spacing */
 .dj-card p {
     margin: 0.5rem 0;
+    color: #e4effe; /* Lighter text color for readability */
 }
+
 /* Styles for action links/buttons within DJ cards */
 .dj-card a {
     display: inline-block;
@@ -112,10 +137,13 @@ h1, h2 {
     color: white;
     text-decoration: none;
     border-radius: 4px;
+    text-align: center;
 }
+
 .dj-card a:hover {
     background-color: #0056b3;
 }
+
 
 /* =========================================
    Feedback Styles
@@ -458,4 +486,46 @@ header .navbar a:hover {
 .sort-button.active {
     background-color: #61aefb;
     font-weight: bold;
+}
+/* posts page admin */
+/* Styling for edit buttons */
+.edit-button {
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for cancel buttons */
+.cancel-button {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-button:hover {
+    background-color: #cc0000;
+}
+
+/* Hide edit form by default */
+.hidden {
+    display: none;
+}
+
+/* Edit form styling */
+.edit-form {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 5px;
 }

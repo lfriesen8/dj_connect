@@ -26,6 +26,18 @@ $stmt_posts = $db->prepare($query_posts);
 $stmt_posts->execute();
 $posts = $stmt_posts->fetchAll();
 
+// Fetch DJs and their genres
+$query_djs = "SELECT id, username, genres FROM users WHERE role = 'dj'";
+$stmt_djs = $db->prepare($query_djs);
+$stmt_djs->execute();
+$djs = $stmt_djs->fetchAll();
+
+// Fetch available genres from the categories table
+$query_categories = "SELECT * FROM categories";
+$stmt_categories = $db->prepare($query_categories);
+$stmt_categories->execute();
+$categories = $stmt_categories->fetchAll();
+
 // Handle booking status updates or deletion
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'], $_POST['action'])) {
     $booking_id = filter_input(INPUT_POST, 'booking_id', FILTER_VALIDATE_INT);
@@ -52,6 +64,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'], $_POST[
         }
     }
     header("Location: admin_dashboard.php?message=Failed to process booking.");
+    exit;
+}
+
+// Handle genre updates
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dj_id'], $_POST['genre_id'])) {
+    $dj_id = filter_input(INPUT_POST, 'dj_id', FILTER_VALIDATE_INT);
+    $genre_id = filter_input(INPUT_POST, 'genre_id', FILTER_VALIDATE_INT);
+
+    if ($dj_id && $genre_id) {
+        $query_update_genre = "UPDATE users SET genres = (SELECT name FROM categories WHERE id = :genre_id) WHERE id = :dj_id";
+        $stmt_update_genre = $db->prepare($query_update_genre);
+        $stmt_update_genre->bindValue(':genre_id', $genre_id, PDO::PARAM_INT);
+        $stmt_update_genre->bindValue(':dj_id', $dj_id, PDO::PARAM_INT);
+        if ($stmt_update_genre->execute()) {
+            header("Location: admin_dashboard.php?message=Genre updated successfully.");
+            exit;
+        }
+    }
+    header("Location: admin_dashboard.php?message=Failed to update genre.");
     exit;
 }
 ?>
@@ -151,6 +182,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'], $_POST[
             <?php else: ?>
                 <p>No bookings at the moment.</p>
             <?php endif; ?>
+        </section>
+
+        <!-- Manage DJ Genres Section -->
+        <section>
+            <h2>Manage DJ Genres</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>DJ</th>
+                        <th>Current Genre</th>
+                        <th>Update Genre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($djs as $dj): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($dj['username']); ?></td>
+                            <td><?= htmlspecialchars($dj['genres']); ?></td>
+                            <td>
+                            <form action="../backend/update_dj_genre.php" method="POST">
+                                    <input type="hidden" name="dj_id" value="<?= $dj['id']; ?>">
+                                    <select name="genre_id" required>
+                                        <?php foreach ($categories as $category): ?>
+                                            <option value="<?= $category['id']; ?>" <?= $dj['genres'] === $category['name'] ? 'selected' : ''; ?>>
+                                                <?= htmlspecialchars($category['name']); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <button type="submit" class="edit-button">Update</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </section>
 
         <!-- Manage Posts Section -->

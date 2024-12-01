@@ -13,14 +13,31 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
+// Fetch all genres for the filter dropdown
+$query_genres = "SELECT * FROM categories";
+$stmt_genres = $db->prepare($query_genres);
+$stmt_genres->execute();
+$genres = $stmt_genres->fetchAll();
+
+// Get the selected genre filter if any
+$selected_genre = filter_input(INPUT_GET, 'genre', FILTER_VALIDATE_INT);
+
 // Fetch all DJs along with their average ratings
-$query = "SELECT u.id, u.username, u.bio, u.genres, 
-                 (SELECT AVG(rating) FROM ratings_reviews WHERE dj_id = u.id) AS avg_rating
-          FROM users u
-          WHERE u.role = 'dj'";
-$stmt = $db->prepare($query);
-$stmt->execute();
-$djs = $stmt->fetchAll();
+$query_djs = "SELECT u.id, u.username, u.bio, u.genres, 
+                     (SELECT AVG(rating) FROM ratings_reviews WHERE dj_id = u.id) AS avg_rating,
+                     c.name AS primary_genre
+              FROM users u
+              LEFT JOIN categories c ON u.primary_genre_id = c.id
+              WHERE u.role = 'dj'";
+if ($selected_genre) {
+    $query_djs .= " AND u.primary_genre_id = :selected_genre";
+}
+$stmt_djs = $db->prepare($query_djs);
+if ($selected_genre) {
+    $stmt_djs->bindValue(':selected_genre', $selected_genre, PDO::PARAM_INT);
+}
+$stmt_djs->execute();
+$djs = $stmt_djs->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -70,6 +87,19 @@ $djs = $stmt->fetchAll();
             <p class="feedback success">Booking request submitted successfully!</p>
         <?php endif; ?>
 
+        <!-- Genre Filter Section -->
+        <form method="GET" action="index.php" class="genre-filter">
+            <label for="genre">Filter by Genre:</label>
+            <select name="genre" id="genre" onchange="this.form.submit()">
+                <option value="">All Genres</option>
+                <?php foreach ($genres as $genre): ?>
+                    <option value="<?= $genre['id']; ?>" <?= $selected_genre == $genre['id'] ? 'selected' : ''; ?>>
+                        <?= htmlspecialchars($genre['name']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </form>
+
         <!-- DJ Listings Section -->
         <h1>Discover DJs</h1>
         <div class="dj-cards-container"> <!-- Updated container for card layout -->
@@ -78,18 +108,20 @@ $djs = $stmt->fetchAll();
                     <div class="dj-card">
                         <h2><?= htmlspecialchars($dj['username']); ?></h2>
                         <p><strong>Bio:</strong> <?= htmlspecialchars_decode($dj['bio']); ?></p>
+                        <p><strong>Primary Genre:</strong> <?= htmlspecialchars($dj['primary_genre']); ?></p>
                         <p><strong>Genres:</strong> <?= htmlspecialchars_decode($dj['genres']); ?></p>
                         <p><strong>Average Rating:</strong> <?= number_format($dj['avg_rating'] ?? 0, 1); ?> / 5</p>
                         <a href="dj_profile.php?id=<?= $dj['id']; ?>">View Profile & Book</a>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p>No DJs available at the moment. Check back later!</p>
+                <p>No DJs available for the selected genre. Check back later!</p>
             <?php endif; ?>
         </div>
     </main>
 </body>
 </html>
+
 
 
 

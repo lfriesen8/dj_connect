@@ -19,11 +19,17 @@ $stmt->execute();
 $bookings = $stmt->fetchAll();
 
 // Fetch the DJ's profile information
-$query_profile = "SELECT bio, genres, profile_image FROM users WHERE id = :dj_id";
+$query_profile = "SELECT bio, genres, profile_image, primary_genre_id FROM users WHERE id = :dj_id";
 $stmt_profile = $db->prepare($query_profile);
 $stmt_profile->bindValue(':dj_id', $dj_id, PDO::PARAM_INT);
 $stmt_profile->execute();
 $dj_profile = $stmt_profile->fetch();
+
+// Fetch all genres from the categories table
+$query_genres = "SELECT * FROM categories";
+$stmt_genres = $db->prepare($query_genres);
+$stmt_genres->execute();
+$genres = $stmt_genres->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -69,36 +75,44 @@ $dj_profile = $stmt_profile->fetch();
 
                 <label for="genres">Genres:</label>
                 <textarea name="genres" id="genres" rows="2"><?= $dj_profile['genres'] ?? ''; ?></textarea>
+                <form action="../backend/update_dj_genre.php" method="POST">
+                <label for="primary_genre">Primary Genre:</label>
+                <select name="primary_genre" id="primary_genre" required>
+                    <option value="">Select Primary Genre</option>
+                    <?php foreach ($genres as $genre): ?>
+                        <option value="<?= $genre['id']; ?>" <?= $dj_profile['primary_genre_id'] == $genre['id'] ? 'selected' : ''; ?>>
+                            <?= htmlspecialchars($genre['name']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
 
                 <button type="submit">Update Profile</button>
             </form>
         </section>
 
         <!-- Upload and Remove Profile Image -->
-<section class="upload-image-form">
-    <h2>Profile Picture</h2>
-    <?php 
-    // Construct the full path to the image file
-    $image_path = "../uploads/dj_profiles/" . htmlspecialchars($dj_profile['profile_image']); 
-    ?>
-    <?php if (!empty($dj_profile['profile_image']) && file_exists($image_path)): ?>
-        <div class="current-image">
-            <img src="<?= $image_path; ?>" alt="Profile Picture" />
-        </div>
-        <form action="../backend/remove_profile_image.php" method="POST">
-            <button type="submit">Remove Profile Picture</button>
-        </form>
-    <?php else: ?>
-        <p>No profile picture uploaded.</p>
-    <?php endif; ?>
-    <form action="../backend/upload_profile_image.php" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="dj_id" value="<?= $dj_id; ?>">
-        <label for="profile_image">Upload a New Profile Picture:</label>
-        <input type="file" id="profile_image" name="profile_image" accept="image/*" required>
-        <button type="submit">Upload</button>
-    </form>
-</section>
-
+        <section class="upload-image-form">
+            <h2>Profile Picture</h2>
+            <?php 
+            $image_path = "../uploads/dj_profiles/" . htmlspecialchars($dj_profile['profile_image']); 
+            ?>
+            <?php if (!empty($dj_profile['profile_image']) && file_exists($image_path)): ?>
+                <div class="current-image">
+                    <img src="<?= $image_path; ?>" alt="Profile Picture" />
+                </div>
+                <form action="../backend/remove_profile_image.php" method="POST">
+                    <button type="submit">Remove Profile Picture</button>
+                </form>
+            <?php else: ?>
+                <p>No profile picture uploaded.</p>
+            <?php endif; ?>
+            <form action="../backend/upload_profile_image.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="dj_id" value="<?= $dj_id; ?>">
+                <label for="profile_image">Upload a New Profile Picture:</label>
+                <input type="file" id="profile_image" name="profile_image" accept="image/*" required>
+                <button type="submit">Upload</button>
+            </form>
+        </section>
 
         <!-- Booking Table -->
         <h2>Your Bookings</h2>
@@ -155,3 +169,4 @@ $dj_profile = $stmt_profile->fetch();
     </main>
 </body>
 </html>
+

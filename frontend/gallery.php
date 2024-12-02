@@ -1,6 +1,5 @@
 <?php
 require('../backend/connect.php');
-// Gallery for Admins to upload images from previous events
 
 // Ensure session is started only if not already active
 if (session_status() === PHP_SESSION_NONE) {
@@ -33,6 +32,29 @@ $images = $stmt->fetchAll();
         </div>
     </header>
     <main>
+        <!-- Admin Upload Section -->
+        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+            <section class="upload-section">
+                <h2>Upload New Image</h2>
+                <form action="../backend/process_gallery_upload.php" method="POST" enctype="multipart/form-data">
+                    <label for="image">Choose an image:</label>
+                    <input type="file" id="image" name="image" accept="image/*" required>
+
+                    <label for="title">Image Title:</label>
+                    <input type="text" id="title" name="title" maxlength="255" required>
+
+                    <label for="caption">Image Caption:</label>
+                    <textarea id="caption" name="caption" maxlength="500" required></textarea>
+
+                    <label for="category">Category:</label>
+                    <input type="text" id="category" name="category" maxlength="100" required>
+
+                    <button type="submit">Upload</button>
+                </form>
+            </section>
+        <?php endif; ?>
+
+        <!-- Gallery Section -->
         <div class="gallery-container">
             <?php if (!empty($images)): ?>
                 <?php foreach ($images as $image): ?>
@@ -46,6 +68,7 @@ $images = $stmt->fetchAll();
                 <p class="no-images-message">No images in the gallery yet. Check back later!</p>
             <?php endif; ?>
         </div>
+
         <!-- Enlarged Image Modal -->
         <div id="image-modal" class="modal" onclick="closeModal()">
             <span class="close-btn" onclick="closeModal()">x</span>
@@ -67,8 +90,6 @@ $images = $stmt->fetchAll();
     </script>
 </body>
 </html>
-
-
 
 
 

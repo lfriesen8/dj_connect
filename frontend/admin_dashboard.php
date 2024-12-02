@@ -267,8 +267,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['dj_id'], $_POST['genr
     </main>
 </body>
 </html>
-
-
-
-
-

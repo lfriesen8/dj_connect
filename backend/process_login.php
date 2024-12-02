@@ -32,8 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
         // Redirect back to login with an error message
-        $error_message = "Invalid username or password.";
-        header("Location: ../frontend/login.php?error=" . urlencode($error_message));
+        header("Location: ../frontend/login.php?error=" . urlencode("Invalid credentials. Please revise."));
         exit;
     }
 }

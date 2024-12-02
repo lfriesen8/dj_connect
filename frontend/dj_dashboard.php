@@ -59,11 +59,10 @@ $genres = $stmt_genres->fetchAll();
     </header>
     <main>
         <h1>Your Dashboard</h1>
-
-        <!-- Display Feedback -->
-        <?php if (isset($_SESSION['message'])): ?>
-            <p class="feedback success"><?= htmlspecialchars($_SESSION['message']); ?></p>
-            <?php unset($_SESSION['message']); ?>
+       
+         <!-- Display Feedback -->
+         <?php if (isset($_GET['message']) && $_GET['message'] === 'profile_updated'): ?>
+            <p class="feedback success">Profile updated successfully!</p>
         <?php endif; ?>
 
         <!-- Update Bio and Genres -->

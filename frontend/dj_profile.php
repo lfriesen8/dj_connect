@@ -72,7 +72,7 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
                         <div class="get-it-started">
                             <h3 class="handwriting-text">Let's get your party started!</h3>
                         </div>
-                        <img src="../uploads/dj_profiles/<?= htmlspecialchars($dj['profile_image']); ?>" alt="">
+                        <img src="../uploads/dj_profiles/<?= htmlspecialchars($dj['profile_image']); ?>" alt="Profile Picture">
                     </div>
                 </div>
                 <p><strong>Bio:</strong> <?= htmlspecialchars_decode($dj['bio']); ?></p>
@@ -99,6 +99,13 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
                             <p><?= htmlspecialchars($review['comment']); ?></p>
                             <p><strong>Rating:</strong> <?= $review['rating']; ?> / 5</p>
                             <p><small>Posted on <?= htmlspecialchars($review['created_at']); ?></small></p>
+                            <?php if ($_SESSION['role'] === 'admin'): ?>
+                                <!-- Admin Delete Button -->
+                                <form action="../backend/delete_review.php" method="POST">
+                                    <input type="hidden" name="review_id" value="<?= $review['id']; ?>">
+                                    <button type="submit" class="delete-button">Delete Review</button>
+                                </form>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -140,4 +147,3 @@ $avg_rating = $stmt_avg_rating->fetchColumn() ?? 0;
     </main>
 </body>
 </html>
-

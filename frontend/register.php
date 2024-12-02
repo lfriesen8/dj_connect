@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="../styles/main.css">
     <title>Register</title>
 </head>
+<div id="dj_connect_logo">
+            <a href="login.php">DJ CONNECT</a>
+            </div>
 <body>
     <div class="container">
         <h1>Register</h1>
